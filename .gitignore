@@ -1,2 +1,16 @@
 vendor/
 *.exe
+
+# Local example credentials, customer data, and installed dependencies.
+.env
+**/.env
+.venv/
+__pycache__/
+node_modules/
+*.gem
+examples/browser-request.json
+examples/order.json
+examples/batch.json
+examples/delivery.json
+examples/signature.txt
+bin/
