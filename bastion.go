@@ -20,7 +20,7 @@ import (
 	"time"
 )
 
-const DefaultEndpoint = "https://api-production-761a5.up.railway.app/api/antibot"
+const DefaultEndpoint = "https://api.bastionsecurity.io/api/antibot"
 
 type Config struct {
 	SiteKey, Secret, Endpoint string
