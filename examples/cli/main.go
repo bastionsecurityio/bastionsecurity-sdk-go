@@ -90,13 +90,13 @@ func run() (any, int, error) {
 		if err := readJSON(args[2], &order); err != nil {
 			return nil, 1, err
 		}
-		if telemetry.Token == "" || len(telemetry.Fingerprint) == 0 || telemetry.IdempotencyKey == "" {
+		if (telemetry.BrowserReceipt == "" && (telemetry.Token == "" || len(telemetry.Fingerprint) == 0)) || telemetry.IdempotencyKey == "" {
 			return nil, 1, errors.New("complete buildRequest() telemetry with a stable idempotency_key is required")
 		}
 		if order.CustomerID == "" || order.PaymentID == "" || order.Amount == nil || math.IsNaN(*order.Amount) || math.IsInf(*order.Amount, 0) || *order.Amount < 0 {
 			return nil, 1, errors.New("trusted order needs customerId, paymentId, and a finite nonnegative amount")
 		}
-		request := bastion.ClassifyRequest{Token: telemetry.Token, Fingerprint: telemetry.Fingerprint, Behavior: telemetry.Behavior, Environment: telemetry.Environment, IdempotencyKey: telemetry.IdempotencyKey, Context: bastion.ClassifyContext{EventType: "checkout", AccountID: order.CustomerID, OrderAmount: *order.Amount, PaymentHash: order.PaymentID}}
+		request := bastion.ClassifyRequest{BrowserReceipt: telemetry.BrowserReceipt, Token: telemetry.Token, Fingerprint: telemetry.Fingerprint, Behavior: telemetry.Behavior, Environment: telemetry.Environment, IdempotencyKey: telemetry.IdempotencyKey, Context: bastion.ClassifyContext{EventType: "checkout", AccountID: order.CustomerID, OrderAmount: *order.Amount, PaymentHash: order.PaymentID}}
 		decision, err := client.Verify(ctx, request)
 		if err != nil {
 			return nil, 1, err

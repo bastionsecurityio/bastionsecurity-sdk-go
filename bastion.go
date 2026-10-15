@@ -88,6 +88,7 @@ type ClassifyContext struct {
 	LoginSucceeded *bool   `json:"login_succeeded,omitempty"`
 }
 type ClassifyRequest struct {
+	BrowserReceipt string            `json:"browser_receipt,omitempty"`
 	Token          string            `json:"token,omitempty"`
 	Context        ClassifyContext   `json:"context"`
 	IdempotencyKey string            `json:"idempotency_key,omitempty"`
@@ -115,18 +116,27 @@ type Challenge struct {
 	Difficulty  int       `json:"difficulty"`
 	ExpiresAt   time.Time `json:"expires_at"`
 }
+type BrowserEvidence struct {
+	Active            bool   `json:"active"`
+	Mode              string `json:"mode"`
+	Status            string `json:"status"`
+	Encrypted         bool   `json:"encrypted"`
+	Interacted        bool   `json:"interacted"`
+	NeedsVerification bool   `json:"needsVerification"`
+}
 type ClassifyResult struct {
-	Classification string     `json:"classification"`
-	RiskScore      int        `json:"risk_score"`
-	RiskLevel      string     `json:"risk_level"`
-	Signals        []Signal   `json:"signals"`
-	Action         string     `json:"action"`
-	RequestID      string     `json:"request_id"`
-	DeviceID       string     `json:"device_id"`
-	Identity       *Identity  `json:"identity,omitempty"`
-	Challenge      *Challenge `json:"challenge,omitempty"`
-	DecisionMs     float64    `json:"decision_ms"`
-	Timestamp      time.Time  `json:"timestamp"`
+	BrowserEvidence *BrowserEvidence `json:"browser_evidence,omitempty"`
+	Classification  string           `json:"classification"`
+	RiskScore       int              `json:"risk_score"`
+	RiskLevel       string           `json:"risk_level"`
+	Signals         []Signal         `json:"signals"`
+	Action          string           `json:"action"`
+	RequestID       string           `json:"request_id"`
+	DeviceID        string           `json:"device_id"`
+	Identity        *Identity        `json:"identity,omitempty"`
+	Challenge       *Challenge       `json:"challenge,omitempty"`
+	DecisionMs      float64          `json:"decision_ms"`
+	Timestamp       time.Time        `json:"timestamp"`
 }
 type FingerprintResult struct {
 	Token         string    `json:"token"`
